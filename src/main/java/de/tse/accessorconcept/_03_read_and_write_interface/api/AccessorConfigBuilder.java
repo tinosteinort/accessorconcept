@@ -22,7 +22,7 @@ public class AccessorConfigBuilder<TUPEL_TYPE, ATTRIBUTE_DESCRIPTION_TYPE extend
         return this;
     }
 
-    public AccessorConfigImpl<TUPEL_TYPE> build() {
+    public AccessorConfig<TUPEL_TYPE> build() {
         return new AccessorConfigImpl<>(readers, writers);
     }
 
@@ -32,8 +32,8 @@ public class AccessorConfigBuilder<TUPEL_TYPE, ATTRIBUTE_DESCRIPTION_TYPE extend
         private final Map<Class<?>, AttributeWriter<TYPE, ?, ? extends Attribute<?>>> writers = new HashMap<>();
 
         private AccessorConfigImpl(
-                Map<Class<?>, AttributeReader<TYPE, ?, ? extends Attribute<?>>> readers,
-                Map<Class<?>, AttributeWriter<TYPE, ?, ? extends Attribute<?>>> writers) {
+                final Map<Class<?>, AttributeReader<TYPE, ?, ? extends Attribute<?>>> readers,
+                final Map<Class<?>, AttributeWriter<TYPE, ?, ? extends Attribute<?>>> writers) {
             this.readers.putAll(readers);
             this.writers.putAll(writers);
         }
