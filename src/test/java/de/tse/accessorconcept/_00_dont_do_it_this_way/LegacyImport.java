@@ -1,6 +1,6 @@
 package de.tse.accessorconcept._00_dont_do_it_this_way;
 
-import de.tse.accessorconcept.ByteArrayHelper;
+import de.tse.accessorconcept._03_read_and_write_interface.bytearray.ByteArrayHelper;
 import de.tse.accessorconcept.MyObject;
 
 /**

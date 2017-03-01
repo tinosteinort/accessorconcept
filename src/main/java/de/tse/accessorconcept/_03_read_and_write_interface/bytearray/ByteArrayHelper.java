@@ -1,4 +1,4 @@
-package de.tse.accessorconcept;
+package de.tse.accessorconcept._03_read_and_write_interface.bytearray;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;

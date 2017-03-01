@@ -1,0 +1,78 @@
+package de.tse.accessorconcept._03_read_and_write_interface;
+
+import de.tse.accessorconcept.MyObject;
+import de.tse.accessorconcept._03_read_and_write_interface.api.AccessorConfig;
+import de.tse.accessorconcept._03_read_and_write_interface.api.AccessorConfigBuilder;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.CsvAttribute;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.CsvRow;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.PersonCsvReader;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.PersonCsvWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.reader.CsvIntegerAttributeReader;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.reader.CsvReader;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.reader.CsvStringAttributeReader;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.writer.CsvIntegerAttributeWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.writer.CsvStringAttributeWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.csv.writer.CsvWriter;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.io.UnsupportedEncodingException;
+
+public class ReadAndWriteCsvInterface {
+
+    private final AccessorConfig<CsvRow> csvConfig = new AccessorConfigBuilder<CsvRow, CsvAttribute<?>>()
+            .registerReader(String.class, new CsvStringAttributeReader())
+            .registerReader(Integer.class, new CsvIntegerAttributeReader())
+            .registerWriter(String.class, new CsvStringAttributeWriter())
+            .registerWriter(Integer.class, new CsvIntegerAttributeWriter())
+            .build();
+
+    @Test public void testCsvImport() throws UnsupportedEncodingException {
+
+        final CsvRow data = new CsvRow("Dagobert", "Duck", "100");
+
+        final MyObject myObject = doImport(data);
+
+        Assert.assertEquals("Dagobert", myObject.getFirstname());
+        Assert.assertEquals("Duck", myObject.getLastname());
+        Assert.assertEquals(100, myObject.getAge());
+    }
+
+    public MyObject doImport(final CsvRow row) {
+
+        final MyObject obj = new MyObject();
+
+        final PersonCsvReader reader = new PersonCsvReader(new CsvReader(csvConfig, row));
+
+        reader.firstname().ifPresent(obj::setFirstname);
+        reader.lastname().ifPresent(obj::setLastname);
+        reader.age().ifPresent(obj::setAge);
+
+        return obj;
+    }
+
+    @Test public void testCsvExport() throws UnsupportedEncodingException {
+
+        final MyObject obj = new MyObject();
+        obj.setFirstname("Dagobert");
+        obj.setLastname("Duck");
+        obj.setAge(100);
+
+        Assert.assertEquals(
+                new CsvRow("Dagobert", "Duck", "100"),
+                doCsvExport(obj));
+    }
+
+    public CsvRow doCsvExport(final MyObject obj) {
+
+        final CsvRow row = new CsvRow(3);
+
+        final PersonCsvWriter writer = new PersonCsvWriter(new CsvWriter(csvConfig, row));
+
+        writer.firstname(obj.getFirstname());
+        writer.lastname(obj.getLastname());
+        writer.age(obj.getAge());
+
+        return row;
+    }
+}
