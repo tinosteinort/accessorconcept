@@ -1,6 +1,6 @@
 package de.tse.accessorconcept._02_only_write_interface;
 
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.ByteArrayHelper;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.ByteArrayHelper;
 
 public class OnlyWriteByteArrayWriter {
 

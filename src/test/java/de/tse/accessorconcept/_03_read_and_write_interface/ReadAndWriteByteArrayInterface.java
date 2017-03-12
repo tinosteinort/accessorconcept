@@ -1,17 +1,15 @@
 package de.tse.accessorconcept._03_read_and_write_interface;
 
 import de.tse.accessorconcept.MyObject;
-import de.tse.accessorconcept._03_read_and_write_interface.api.AccessorConfig;
-import de.tse.accessorconcept._03_read_and_write_interface.api.AccessorConfigBuilder;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.ByteArrayAttribute;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.PersonByteArrayReader;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.PersonByteArrayWriter;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.reader.ByteArrayReader;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.reader.IntegerAttributeReader;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.reader.StringAttributeReader;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.writer.ByteArrayWriter;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.writer.IntegerAttributeWriter;
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.writer.StringAttributeWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConfig;
+import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConfigBuilder;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.ByteArrayAttribute;
+import de.tse.accessorconcept._03_read_and_write_interface.using.bytearray.PersonByteArrayReader;
+import de.tse.accessorconcept._03_read_and_write_interface.using.bytearray.PersonByteArrayWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.reader.IntegerAttributeReader;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.reader.StringAttributeReader;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.writer.IntegerAttributeWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.writer.StringAttributeWriter;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -41,7 +39,7 @@ public class ReadAndWriteByteArrayInterface {
 
         final MyObject obj = new MyObject();
 
-        final PersonByteArrayReader reader = new PersonByteArrayReader(new ByteArrayReader(byteArrayConfig, data));
+        final PersonByteArrayReader reader = new PersonByteArrayReader(byteArrayConfig, data);
 
         reader.firstname().ifPresent(obj::setFirstname);
         reader.lastname().ifPresent(obj::setLastname);
@@ -66,7 +64,7 @@ public class ReadAndWriteByteArrayInterface {
 
         final byte[] data = new byte[23];
 
-        final PersonByteArrayWriter writer = new PersonByteArrayWriter(new ByteArrayWriter(byteArrayConfig, data));
+        final PersonByteArrayWriter writer = new PersonByteArrayWriter(byteArrayConfig, data);
 
         writer.firstname(obj.getFirstname());
         writer.lastname(obj.getLastname());

@@ -1,6 +1,6 @@
 package de.tse.accessorconcept._01_only_read_interface;
 
-import de.tse.accessorconcept._03_read_and_write_interface.bytearray.ByteArrayHelper;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.ByteArrayHelper;
 
 import java.util.Optional;
 

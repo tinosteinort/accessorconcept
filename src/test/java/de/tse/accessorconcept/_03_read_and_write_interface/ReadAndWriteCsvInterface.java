@@ -1,18 +1,16 @@
 package de.tse.accessorconcept._03_read_and_write_interface;
 
 import de.tse.accessorconcept.MyObject;
-import de.tse.accessorconcept._03_read_and_write_interface.api.AccessorConfig;
-import de.tse.accessorconcept._03_read_and_write_interface.api.AccessorConfigBuilder;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.CsvAttribute;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.CsvRow;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.PersonCsvReader;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.PersonCsvWriter;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.reader.CsvIntegerAttributeReader;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.reader.CsvReader;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.reader.CsvStringAttributeReader;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.writer.CsvIntegerAttributeWriter;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.writer.CsvStringAttributeWriter;
-import de.tse.accessorconcept._03_read_and_write_interface.csv.writer.CsvWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConfig;
+import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConfigBuilder;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.csv.CsvAttribute;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.csv.CsvData;
+import de.tse.accessorconcept._03_read_and_write_interface.using.csv.PersonCsvReader;
+import de.tse.accessorconcept._03_read_and_write_interface.using.csv.PersonCsvWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.csv.reader.CsvIntegerAttributeReader;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.csv.reader.CsvStringAttributeReader;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.csv.writer.CsvIntegerAttributeWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.csv.writer.CsvStringAttributeWriter;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +18,7 @@ import java.io.UnsupportedEncodingException;
 
 public class ReadAndWriteCsvInterface {
 
-    private final AccessorConfig<CsvRow> csvConfig = new AccessorConfigBuilder<CsvRow, CsvAttribute<?>>()
+    private final AccessorConfig<CsvData> csvConfig = new AccessorConfigBuilder<CsvData, CsvAttribute<?>>()
             .registerReader(String.class, new CsvStringAttributeReader())
             .registerReader(Integer.class, new CsvIntegerAttributeReader())
             .registerWriter(String.class, new CsvStringAttributeWriter())
@@ -29,7 +27,7 @@ public class ReadAndWriteCsvInterface {
 
     @Test public void testCsvImport() throws UnsupportedEncodingException {
 
-        final CsvRow data = new CsvRow("Dagobert", "Duck", "100");
+        final CsvData data = new CsvData("Dagobert", "Duck", "100");
 
         final MyObject myObject = doImport(data);
 
@@ -38,11 +36,11 @@ public class ReadAndWriteCsvInterface {
         Assert.assertEquals(100, myObject.getAge());
     }
 
-    public MyObject doImport(final CsvRow row) {
+    public MyObject doImport(final CsvData row) {
 
         final MyObject obj = new MyObject();
 
-        final PersonCsvReader reader = new PersonCsvReader(new CsvReader(csvConfig, row));
+        final PersonCsvReader reader = new PersonCsvReader(csvConfig, row);
 
         reader.firstname().ifPresent(obj::setFirstname);
         reader.lastname().ifPresent(obj::setLastname);
@@ -59,15 +57,15 @@ public class ReadAndWriteCsvInterface {
         obj.setAge(100);
 
         Assert.assertEquals(
-                new CsvRow("Dagobert", "Duck", "100"),
+                new CsvData("Dagobert", "Duck", "100"),
                 doCsvExport(obj));
     }
 
-    public CsvRow doCsvExport(final MyObject obj) {
+    public CsvData doCsvExport(final MyObject obj) {
 
-        final CsvRow row = new CsvRow(3);
+        final CsvData row = new CsvData(3);
 
-        final PersonCsvWriter writer = new PersonCsvWriter(new CsvWriter(csvConfig, row));
+        final PersonCsvWriter writer = new PersonCsvWriter(csvConfig, row);
 
         writer.firstname(obj.getFirstname());
         writer.lastname(obj.getLastname());
