@@ -25,7 +25,7 @@ public class ReadAndWriteCsvInterface {
             .registerWriter(Integer.class, new CsvIntegerAttributeWriter())
             .build();
 
-    @Test public void testCsvImport() throws UnsupportedEncodingException {
+    @Test public void testImport() throws UnsupportedEncodingException {
 
         final CsvData data = new CsvData("Dagobert", "Duck", "100");
 
@@ -49,7 +49,7 @@ public class ReadAndWriteCsvInterface {
         return obj;
     }
 
-    @Test public void testCsvExport() throws UnsupportedEncodingException {
+    @Test public void testExport() throws UnsupportedEncodingException {
 
         final MyObject obj = new MyObject();
         obj.setFirstname("Dagobert");
