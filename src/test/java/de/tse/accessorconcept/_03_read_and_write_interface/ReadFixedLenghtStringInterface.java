@@ -3,6 +3,8 @@ package de.tse.accessorconcept._03_read_and_write_interface;
 import de.tse.accessorconcept.MyObject;
 import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConfig;
 import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConfigBuilder;
+import de.tse.accessorconcept._03_read_and_write_interface.accessor.reader.ReadAccessor;
+import de.tse.accessorconcept._03_read_and_write_interface.accessor.writer.WriteAccessor;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.FixedLengthString;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.FixedLengthStringAttribute;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.reader.IntegerAttributeReader;
@@ -121,5 +123,23 @@ public class ReadFixedLenghtStringInterface {
         Assert.assertEquals(
                 new FixedLengthString("Tick      Duck        7"),
                 row);
+    }
+
+    @Test public void genericParameterTest() {
+
+        final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> localConfig = new AccessorConfigBuilder<>(config)
+                .registerReader(String.class, new StringAttributeReader())
+                .registerReader(Integer.class, new IntegerAttributeReader())
+                .registerWriter(String.class, new StringAttributeWriter())
+                .registerWriter(Integer.class, new IntegerAttributeWriter())
+                .build();
+
+        final String data = "Tick      Duck        7";
+
+        final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> reader = new ReadAccessor<>(config, new FixedLengthString(data));
+        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer = new WriteAccessor<>(config, new FixedLengthString(data));
+        // This two Lines of Code does not compile properly if everything works fine
+//        final String age = reader.read(PersonDescriptor.AGE);
+//        writer.write(PersonDescriptor.AGE, "123");
     }
 }

@@ -15,8 +15,8 @@ public class WriteAccessor<TUPEL_TYPE, ATTR_TYPE extends Attribute<?>> {
         this.data = data;
     }
 
-    public <T> void write(final ATTR_TYPE attribute, final T value) {
-        writer(attribute).write(data, attribute, value);
+    public <T, ATTR extends Attribute<T>> void write(final ATTR attribute, final T value) {
+        writer((ATTR_TYPE) attribute).write(data, (ATTR_TYPE) attribute, value);
     }
 
     private <T> AttributeWriter<TUPEL_TYPE, T, ATTR_TYPE> writer(final ATTR_TYPE attribute) {

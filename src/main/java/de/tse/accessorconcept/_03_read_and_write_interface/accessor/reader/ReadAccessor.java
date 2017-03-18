@@ -15,8 +15,8 @@ public class ReadAccessor<TUPEL_TYPE, ATTR_TYPE extends Attribute<?>> {
         this.data = data;
     }
 
-    public <T> T read(final ATTR_TYPE attribute) {
-        return (T) reader(attribute).read(data, attribute);
+    public <T, ATTR extends Attribute<T>> T read(final ATTR attribute) {
+        return (T) reader((ATTR_TYPE) attribute).read(data, (ATTR_TYPE) attribute);
     }
 
     private <T> AttributeReader<TUPEL_TYPE, T, ATTR_TYPE> reader(final ATTR_TYPE attribute) {
