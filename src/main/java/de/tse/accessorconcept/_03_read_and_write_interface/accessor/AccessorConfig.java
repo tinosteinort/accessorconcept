@@ -5,11 +5,11 @@ import de.tse.accessorconcept._03_read_and_write_interface.accessor.writer.Attri
 
 import java.util.Map;
 
-public interface AccessorConfig<TUPEL_TYPE> {
+public interface AccessorConfig<TUPEL_TYPE, ATTR_DESC_TYPE extends Attribute<?>> {
 
-    <T> AttributeReader<TUPEL_TYPE, T, ? extends Attribute<T>> readerFor(Class<T> cls);
+    <ATTR_TYPE> AttributeReader<TUPEL_TYPE, ATTR_TYPE, ATTR_DESC_TYPE> readerFor(ATTR_DESC_TYPE attribute);
 
-    <T> AttributeWriter<TUPEL_TYPE, T, ? extends Attribute<T>> writerFor(Class<T> cls);
+    <ATTR_TYPE> AttributeWriter<TUPEL_TYPE, ATTR_TYPE, ATTR_DESC_TYPE> writerFor(ATTR_DESC_TYPE attribute);
 
     Map<Class<?>, AttributeReader<TUPEL_TYPE, ?, ? extends Attribute<?>>> readers();
 

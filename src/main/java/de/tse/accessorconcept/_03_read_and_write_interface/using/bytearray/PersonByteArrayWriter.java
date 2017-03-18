@@ -8,7 +8,7 @@ public class PersonByteArrayWriter {
 
     private final WriteAccessor<byte[], ByteArrayAttribute<?>> accessor;
 
-    public PersonByteArrayWriter(final AccessorConfig<byte[]> config, final byte[] data) {
+    public PersonByteArrayWriter(final AccessorConfig<byte[], ByteArrayAttribute<?>> config, final byte[] data) {
         this.accessor = new WriteAccessor<>(config, data);
     }
 

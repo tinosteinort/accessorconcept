@@ -10,7 +10,7 @@ public class PersonByteArrayReader {
 
     private final ReadAccessor<byte[], ByteArrayAttribute<?>> accessor;
 
-    public PersonByteArrayReader(final AccessorConfig<byte[]> config, final byte[] data) {
+    public PersonByteArrayReader(final AccessorConfig<byte[], ByteArrayAttribute<?>> config, final byte[] data) {
         this.accessor = new ReadAccessor<>(config, data);
     }
 

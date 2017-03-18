@@ -9,7 +9,9 @@ public class PersonFixedLengthStringWriter {
 
     private final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> accessor;
 
-    public PersonFixedLengthStringWriter(final AccessorConfig<FixedLengthString> config, final FixedLengthString data) {
+    public PersonFixedLengthStringWriter(
+            final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> config,
+            final FixedLengthString data) {
         this.accessor = new WriteAccessor<>(config, data);
     }
 

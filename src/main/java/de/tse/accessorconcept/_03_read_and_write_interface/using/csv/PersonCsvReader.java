@@ -11,7 +11,7 @@ public class PersonCsvReader {
 
     private final ReadAccessor<CsvData, CsvAttribute<?>> accessor;
 
-    public PersonCsvReader(final AccessorConfig<CsvData> config, final CsvData row) {
+    public PersonCsvReader(final AccessorConfig<CsvData, CsvAttribute<?>> config, final CsvData row) {
         this.accessor = new ReadAccessor<>(config, row);
     }
 

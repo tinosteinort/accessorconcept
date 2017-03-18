@@ -9,7 +9,7 @@ public class PersonCsvWriter {
 
     private final WriteAccessor<CsvData, CsvAttribute<?>> accessor;
 
-    public PersonCsvWriter(final AccessorConfig<CsvData> config, final CsvData row) {
+    public PersonCsvWriter(final AccessorConfig<CsvData, CsvAttribute<?>> config, final CsvData row) {
         this.accessor = new WriteAccessor<>(config, row);
     }
 

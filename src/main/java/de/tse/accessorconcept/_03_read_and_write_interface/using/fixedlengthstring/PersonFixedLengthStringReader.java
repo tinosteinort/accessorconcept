@@ -11,7 +11,9 @@ public class PersonFixedLengthStringReader {
 
     private final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> accessor;
 
-    public PersonFixedLengthStringReader(final AccessorConfig<FixedLengthString> config, final FixedLengthString data) {
+    public PersonFixedLengthStringReader(
+            final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> config,
+            final FixedLengthString data) {
         this.accessor = new ReadAccessor<>(config, data);
     }
 

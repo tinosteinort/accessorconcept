@@ -18,7 +18,7 @@ import java.io.UnsupportedEncodingException;
 
 public class ReadAndWriteCsvInterface {
 
-    private final AccessorConfig<CsvData> csvConfig = new AccessorConfigBuilder<CsvData, CsvAttribute<?>>()
+    private final AccessorConfig<CsvData, CsvAttribute<?>> csvConfig = new AccessorConfigBuilder<CsvData, CsvAttribute<?>>()
             .registerReader(String.class, new CsvStringAttributeReader())
             .registerReader(Integer.class, new CsvIntegerAttributeReader())
             .registerWriter(String.class, new CsvStringAttributeWriter())

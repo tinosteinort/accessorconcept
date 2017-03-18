@@ -25,4 +25,12 @@ public class FixedLengthStringAttribute<T> implements Attribute<T> {
     public int getLength() {
         return length;
     }
+
+    @Override public String toString() {
+        return "FixedLengthStringAttribute{" +
+                "type=" + type +
+                ", index=" + index +
+                ", length=" + length +
+                '}';
+    }
 }

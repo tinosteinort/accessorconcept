@@ -3,10 +3,11 @@ package de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedleng
 import de.tse.accessorconcept._03_read_and_write_interface.accessor.writer.AttributeWriter;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.FixedLengthString;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.FixedLengthStringAttribute;
-
-import java.util.Arrays;
+import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.StringFitter;
 
 public class RightAlignedIntegerAttributeWriter implements AttributeWriter<FixedLengthString, Integer, FixedLengthStringAttribute<Integer>> {
+
+    private final StringFitter stringFitter = new StringFitter(StringFitter.Alignment.RIGHT);
 
     @Override public void write(final FixedLengthString data, final FixedLengthStringAttribute<Integer> attribute, final Integer value) {
 
@@ -18,19 +19,6 @@ public class RightAlignedIntegerAttributeWriter implements AttributeWriter<Fixed
     }
 
     private String fillOrCut(final Integer intValue, final FixedLengthStringAttribute<Integer> attribute) {
-        final String value = String.valueOf(intValue);
-        if (value == null) {
-            final char[] data = new char[attribute.getLength()];
-            Arrays.fill(data, ' ');
-            return String.valueOf(data);
-        }
-        else if (value.length() < attribute.getLength()) {
-            final char[] data = new char[attribute.getLength() - value.length()];
-            Arrays.fill(data, ' ');
-            return String.valueOf(data) + value;
-        }
-        else {
-            return value.substring(0, attribute.getLength());
-        }
+        return stringFitter.fit(String.valueOf(intValue), attribute.getLength());
     }
 }

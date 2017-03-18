@@ -4,12 +4,12 @@ import de.tse.accessorconcept.MyObject;
 import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConfig;
 import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConfigBuilder;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.ByteArrayAttribute;
-import de.tse.accessorconcept._03_read_and_write_interface.using.bytearray.PersonByteArrayReader;
-import de.tse.accessorconcept._03_read_and_write_interface.using.bytearray.PersonByteArrayWriter;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.reader.IntegerAttributeReader;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.reader.StringAttributeReader;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.writer.IntegerAttributeWriter;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.bytearray.writer.StringAttributeWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.using.bytearray.PersonByteArrayReader;
+import de.tse.accessorconcept._03_read_and_write_interface.using.bytearray.PersonByteArrayWriter;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 
 public class ReadAndWriteByteArrayInterface {
 
-    private final AccessorConfig<byte[]> byteArrayConfig = new AccessorConfigBuilder<byte[], ByteArrayAttribute<?>>()
+    private final AccessorConfig<byte[], ByteArrayAttribute<?>> byteArrayConfig = new AccessorConfigBuilder<byte[], ByteArrayAttribute<?>>()
             .registerReader(String.class, new StringAttributeReader())
             .registerReader(Integer.class, new IntegerAttributeReader())
             .registerWriter(String.class, new StringAttributeWriter())

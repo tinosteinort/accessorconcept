@@ -6,11 +6,11 @@ import de.tse.accessorconcept._03_read_and_write_interface.accessor.AccessorConf
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.FixedLengthString;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.FixedLengthStringAttribute;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.reader.IntegerAttributeReader;
-import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.reader.RightAlignedIntegerAttributeReader;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.reader.StringAttributeReader;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.writer.IntegerAttributeWriter;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.writer.RightAlignedIntegerAttributeWriter;
 import de.tse.accessorconcept._03_read_and_write_interface.interfaces.fixedlengthstring.writer.StringAttributeWriter;
+import de.tse.accessorconcept._03_read_and_write_interface.using.fixedlengthstring.PersonDescriptor;
 import de.tse.accessorconcept._03_read_and_write_interface.using.fixedlengthstring.PersonFixedLengthStringReader;
 import de.tse.accessorconcept._03_read_and_write_interface.using.fixedlengthstring.PersonFixedLengthStringWriter;
 import org.junit.Assert;
@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 
 public class ReadFixedLenghtStringInterface {
 
-    private final AccessorConfig<FixedLengthString> config = new AccessorConfigBuilder<FixedLengthString, FixedLengthStringAttribute<?>>()
+    private final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> config = new AccessorConfigBuilder<FixedLengthString, FixedLengthStringAttribute<?>>()
             .registerReader(String.class, new StringAttributeReader())
             .registerReader(Integer.class, new IntegerAttributeReader())
             .registerWriter(String.class, new StringAttributeWriter())
@@ -78,8 +78,9 @@ public class ReadFixedLenghtStringInterface {
 
     @Test public void testImportCustomAttribute() {
 
-        final AccessorConfig<FixedLengthString> localConfig = new AccessorConfigBuilder<FixedLengthString, FixedLengthStringAttribute<?>>(config)
-                .registerReader(Integer.class, new RightAlignedIntegerAttributeReader()) // override default behaviour
+        final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> localConfig = new AccessorConfigBuilder<>(config)
+                // not needed, because trim() removes spaces from left and right:
+                // .registerReader(PersonDescriptor.AGE, new RightAlignedIntegerAttributeReader())
                 .build();
 
         // Age is right aligned, custom AttributeReader required for reading
@@ -100,15 +101,14 @@ public class ReadFixedLenghtStringInterface {
 
     @Test public void testExportCustomAttribute() {
 
-        final AccessorConfig<FixedLengthString> localConfig = new AccessorConfigBuilder<FixedLengthString, FixedLengthStringAttribute<?>>(config)
-                .registerWriter(Integer.class, new RightAlignedIntegerAttributeWriter()) // override default behaviour
+        final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> localConfig = new AccessorConfigBuilder<>(config)
+                .registerWriter(PersonDescriptor.AGE, new RightAlignedIntegerAttributeWriter()) // override default behaviour for special Attribute
                 .build();
 
         final MyObject obj = new MyObject();
         obj.setFirstname("Tick");
         obj.setLastname("Duck");
-        // Age should be right aligned, custom AttributeWriter required for writing
-        obj.setAge(7);
+        obj.setAge(7); // Age should be right aligned, custom AttributeWriter required for writing
 
         final FixedLengthString row = new FixedLengthString(23, ' ');
 
